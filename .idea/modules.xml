@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Algorithm_study.iml" filepath="$PROJECT_DIR$/Algorithm_study.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Kong_algorithm/Kong_algorithm.iml" filepath="$PROJECT_DIR$/Kong_algorithm/Kong_algorithm.iml" />
+    </modules>
+  </component>
+</project>
