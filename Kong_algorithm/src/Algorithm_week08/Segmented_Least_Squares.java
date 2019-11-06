@@ -118,13 +118,7 @@ public class Segmented_Least_Squares {
         for(int i = 0; i < n; i++){
             points[i] = new Point(arrayA[2*i+1],arrayA[2*i+2]);
         }
-
         Segmented_Least_Squares test = new Segmented_Least_Squares(n);
         test.result_Print(n,points,c);
     }
-
-
-
-
-
 }
