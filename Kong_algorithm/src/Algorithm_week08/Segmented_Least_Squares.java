@@ -9,7 +9,8 @@ public class Segmented_Least_Squares {
     //최소 오차를 갖는 그래프의 a와 b를 저장하기 위한 배열
     double[][] a_arr, b_arr;
     int[] segmented_Index;
-    int[][] segment_Solution;
+    int[] i_Solution;
+    int[] j_Solution;
 
     public Segmented_Least_Squares(int n) {
         OPT = new double[n+1];
@@ -17,7 +18,8 @@ public class Segmented_Least_Squares {
         errorSum = new double[n+1][n+1];
         a_arr = new double[n+1][n+1]; b_arr = new double[n+1][n+1];
         segmented_Index = new int[n+1];
-        segment_Solution = new int[n+1][n+1];
+        int[] i_Solution = new int[n];
+        int[] j_Solution = new int[n];
     }
 
     public double make_SLS(int n, Point[] p, double c) {
@@ -71,9 +73,24 @@ public class Segmented_Least_Squares {
     }
 
     public void FindSegment(int n) { //나누어지는 구간에 1을 넣어서 표시하는 함수
+        int k = 0;
         for(int j = n, i = segmented_Index[n]; j > 0;
             j = i - 1, i = segmented_Index[j]) {
-            segment_Solution[i][j] = 1;
+            i_Solution[k++] = i;
+            j_Solution[k++] = j;
+        }
+    }
+
+    public void result_Print(int n, Point[] p, double c) {
+        System.out.println("Cost of the optimal solution : "+make_SLS(n,p,c));
+        System.out.println("An optimal solution : ");
+        for(int index = n-1; index >= 0; index--) {
+            if(i_Solution[index] != 0 && j_Solution[index] != 0) {
+                int i = i_Solution[index];
+                int j = j_Solution[index];
+                System.out.printf("[Segment %d - %d] : y = %f * x + %f // square error : %f\n"
+                        , i, j, a_arr[i][j], b_arr[i][j], errorSum[i][j]);
+            }
         }
     }
 
