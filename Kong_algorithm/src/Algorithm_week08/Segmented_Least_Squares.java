@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.util.Stack;
 
 public class Segmented_Least_Squares {
-    double[] OPT;
-    double[][] errorSum; // i ~ j 까지의 SSE를 저장하는 배열
+    private double[] OPT;
+    private double[][] errorSum; // i ~ j 까지의 SSE를 저장하는 배열
     //최소 오차를 갖는 그래프의 a와 b를 저장하기 위한 배열
-    double[][] a_arr, b_arr;
-    int[] segmented_Index;
-    int[] i_Solution;
-    int[] j_Solution;
-    Stack<Integer> i_Stack, j_Stack;
+    private double[][] a_arr, b_arr;
+    private int[] segmented_Index;
+    private int[] i_Solution;
+    private int[] j_Solution;
+    private Stack<Integer> i_Stack, j_Stack;
 
     public Segmented_Least_Squares(int n) {
         OPT = new double[n+1];
@@ -26,7 +26,7 @@ public class Segmented_Least_Squares {
         j_Stack = new Stack();
     }
 
-    public double make_SLS(int n, Point[] p, double c) {
+    private double make_SLS(int n, Point[] p, double c) {
         //SSE를 구하기 위한 변수이다.
         double a,b,N;
         //SSE들의 집합을 구한다.
@@ -76,7 +76,7 @@ public class Segmented_Least_Squares {
         return OPT[n];
     }
 
-    public void FindSegment(int n) { //스택에 segment 구간을 저장하는 함수
+    private void FindSegment(int n) { //스택에 segment 구간을 저장하는 함수
         for(int j = n, i = segmented_Index[n]; j > 0;
             j = i - 1, i = segmented_Index[j]) {
             i_Stack.push(i);
