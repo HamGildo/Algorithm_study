@@ -19,20 +19,19 @@ public class Segmented_Least_Squares {
     }
 
     public double make_SLS(int n, Point[] p, double c) {
-        //계산에 필요한 변수들이다. 차례대로 시그마xy, 시그마x, 시그마y, 시그마x제곱이다.
-        double Sxy=0, Sx=0, Sy=0, Sx_2=0;
         //SSE를 구하기 위한 변수이다.
         double a,b,N;
         //SSE들의 집합을 구한다.
         for(int j = 1; j < n+1; j++) {
             for(int i = 1; i < j+1; i++) {
+                // a, b를 구하기 위한 시그마 계산 변수들이다.
+                double Sxy=0, Sx=0, Sy=0, Sx_2=0;
                 for(int k = i; k < j+1; k++) {
                     Sxy += p[k-1].getX() * p[k-1].getY();
                     Sx += p[k-1].getX();
                     Sy += p[k-1].getY();
                     Sx_2 += p[k-1].getX()*p[k-1].getX();
                 }
-
                 if(i != j) {
                     N = j - i + 1;
                     a = (N * Sxy - Sx * Sy) / (N * Sx_2 - Sx * Sx);
@@ -48,10 +47,6 @@ public class Segmented_Least_Squares {
                 for(int k2 = i; k2 < j+1; k2++) {
                     errorSum[i][j] += Math.pow((p[k2-1].getY() - a_arr[i][j]*p[k2-1].getX() - b_arr[i][j]),2);
                 }
-                Sxy=0;
-                Sx=0;
-                Sy=0;
-                Sx_2=0;
             }
         }
         //OPT배열 생성
