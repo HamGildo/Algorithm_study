@@ -9,6 +9,7 @@ public class Segmented_Least_Squares {
     //최소 오차를 갖는 그래프의 a와 b를 저장하기 위한 배열
     double[][] a_arr, b_arr;
     int[] segmented_Index;
+    int[][] segment_Solution;
 
     public Segmented_Least_Squares(int n) {
         OPT = new double[n+1];
@@ -16,6 +17,7 @@ public class Segmented_Least_Squares {
         errorSum = new double[n+1][n+1];
         a_arr = new double[n+1][n+1]; b_arr = new double[n+1][n+1];
         segmented_Index = new int[n+1];
+        segment_Solution = new int[n+1][n+1];
     }
 
     public double make_SLS(int n, Point[] p, double c) {
@@ -51,25 +53,28 @@ public class Segmented_Least_Squares {
         }
         //OPT배열 생성
         double temp;
-        int OPTindex = 0;
+        int OPT_index = 0;
         for(int j = 1; j < n+1; j++) {
             double min = Double.POSITIVE_INFINITY;
             for(int i = 1; i < j+1; i++) {
                 temp =  errorSum[i][j] + c + OPT[i-1];
                 if(temp < min) {
                     min = temp;
-                    OPTindex = i;
+                    OPT_index = i;
                 }
             }
             OPT[j] = min;
-            segmented_Index[j] = OPTindex;
+            segmented_Index[j] = OPT_index;
         }
         //최종값 리턴
         return OPT[n];
     }
 
-    public void FindSegment(int n) {
-
+    public void FindSegment(int n) { //나누어지는 구간에 1을 넣어서 표시하는 함수
+        for(int j = n, i = segmented_Index[n]; j > 0;
+            j = i - 1, i = segmented_Index[j]) {
+            segment_Solution[i][j] = 1;
+        }
     }
 
     public static void main(String[] args) throws IOException {
