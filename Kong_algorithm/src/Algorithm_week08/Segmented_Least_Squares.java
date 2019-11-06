@@ -8,14 +8,14 @@ public class Segmented_Least_Squares {
     double[][] errorSum; // i ~ j 까지의 SSE를 저장하는 배열
     //최소 오차를 갖는 그래프의 a와 b를 저장하기 위한 배열
     double[][] a_arr, b_arr;
-    int[] segmented;
+    int[] segmented_Index;
 
-    public void Segmented_Least_Squares(int n) {
+    public Segmented_Least_Squares(int n) {
         OPT = new double[n+1];
         OPT[0] = 0;
         errorSum = new double[n+1][n+1];
         a_arr = new double[n+1][n+1]; b_arr = new double[n+1][n+1];
-        segmented = new int[n+1];
+        segmented_Index = new int[n+1];
     }
 
     public double make_SLS(int n, Point[] p, double c) {
@@ -67,7 +67,7 @@ public class Segmented_Least_Squares {
                 }
             }
             OPT[j] = min;
-            segmented[j] = OPTindex;
+            segmented_Index[j] = OPTindex;
         }
         //최종값 리턴
         return OPT[n];
@@ -96,7 +96,7 @@ public class Segmented_Least_Squares {
             points[i] = new Point(arrayA[2*i+1],arrayA[2*i+2]);
         }
 
-        Segmented_Least_Squares test = new Segmented_Least_Squares();
+        Segmented_Least_Squares test = new Segmented_Least_Squares(n);
         System.out.println("OPT cost: "+ test.make_SLS(n,points,c));
     }
 
