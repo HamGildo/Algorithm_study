@@ -1,17 +1,24 @@
 package Algorithm_week08;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Segmented_Least_Squares {
-    public double make_SLS(int n, Point[] p, double c) {
-        double[] OPT = new double[n+1];
-        OPT[0] = 0;
-        double[][] errorSum = new double[n+1][n+1]; // i ~ j 까지의 SSE를 저장하는 배열
-        //최소 오차를 갖는 그래프의 a와 b를 저장하기 위한 배열
-        double[][] a_arr = new double[n+1][n+1], b_arr = new double[n+1][n+1];
+    double[] OPT;
+    double[][] errorSum; // i ~ j 까지의 SSE를 저장하는 배열
+    //최소 오차를 갖는 그래프의 a와 b를 저장하기 위한 배열
+    double[][] a_arr, b_arr;
+    int[] segmented;
 
+    public void Segmented_Least_Squares(int n) {
+        OPT = new double[n+1];
+        OPT[0] = 0;
+        errorSum = new double[n+1][n+1];
+        a_arr = new double[n+1][n+1]; b_arr = new double[n+1][n+1];
+        segmented = new int[n+1];
+    }
+
+    public double make_SLS(int n, Point[] p, double c) {
         //계산에 필요한 변수들이다. 차례대로 시그마xy, 시그마x, 시그마y, 시그마x제곱이다.
         double Sxy=0, Sx=0, Sy=0, Sx_2=0;
         //SSE를 구하기 위한 변수이다.
@@ -48,17 +55,19 @@ public class Segmented_Least_Squares {
             }
         }
         //OPT배열 생성
-        double min = Double.POSITIVE_INFINITY;
         double temp;
+        int OPTindex = 0;
         for(int j = 1; j < n+1; j++) {
+            double min = Double.POSITIVE_INFINITY;
             for(int i = 1; i < j+1; i++) {
                 temp =  errorSum[i][j] + c + OPT[i-1];
                 if(temp < min) {
                     min = temp;
+                    OPTindex = i;
                 }
             }
             OPT[j] = min;
-            min = Double.POSITIVE_INFINITY;
+            segmented[j] = OPTindex;
         }
         //최종값 리턴
         return OPT[n];
