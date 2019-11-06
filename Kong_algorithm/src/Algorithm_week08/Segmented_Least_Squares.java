@@ -65,8 +65,8 @@ public class Segmented_Least_Squares {
         double c =  arrayA[arrayA.length-1];
         //point 배열을 생성한다.
         Point[] points = new Point[n];
-        for(int i = 0; i < arrayA.length-1; i++){
-
+        for(int i = 0; i < n; i++){
+            points[i] = new Point(arrayA[2*i+1],arrayA[2*i+2]);
         }
     }
 
