@@ -2,6 +2,7 @@ package Algorithm_week08;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Stack;
 
 public class Segmented_Least_Squares {
     double[] OPT;
@@ -11,6 +12,7 @@ public class Segmented_Least_Squares {
     int[] segmented_Index;
     int[] i_Solution;
     int[] j_Solution;
+    Stack<Integer> i_Stack, j_Stack;
 
     public Segmented_Least_Squares(int n) {
         OPT = new double[n+1];
@@ -20,6 +22,8 @@ public class Segmented_Least_Squares {
         segmented_Index = new int[n+1];
         int[] i_Solution = new int[n];
         int[] j_Solution = new int[n];
+        i_Stack = new Stack();
+        j_Stack = new Stack();
     }
 
     public double make_SLS(int n, Point[] p, double c) {
@@ -72,25 +76,23 @@ public class Segmented_Least_Squares {
         return OPT[n];
     }
 
-    public void FindSegment(int n) { //나누어지는 구간에 1을 넣어서 표시하는 함수
-        int k = 0;
+    public void FindSegment(int n) { //스택에 segment 구간을 저장하는 함수
         for(int j = n, i = segmented_Index[n]; j > 0;
             j = i - 1, i = segmented_Index[j]) {
-            i_Solution[k++] = i;
-            j_Solution[k++] = j;
+            i_Stack.push(i);
+            j_Stack.push(j);
         }
     }
 
     public void result_Print(int n, Point[] p, double c) {
         System.out.println("Cost of the optimal solution : "+make_SLS(n,p,c));
         System.out.println("An optimal solution : ");
-        for(int index = n-1; index >= 0; index--) {
-            if(i_Solution[index] != 0 && j_Solution[index] != 0) {
-                int i = i_Solution[index];
-                int j = j_Solution[index];
-                System.out.printf("[Segment %d - %d] : y = %f * x + %f // square error : %f\n"
-                        , i, j, a_arr[i][j], b_arr[i][j], errorSum[i][j]);
-            }
+        FindSegment(n);
+        while(!(i_Stack.isEmpty())) {
+            int i = i_Stack.pop();
+            int j = j_Stack.pop();
+            System.out.printf("[Segment %d - %d] : y = %f * x + %f // square error : %f\n"
+                    , i, j, a_arr[i][j], b_arr[i][j], errorSum[i][j]);
         }
     }
 
@@ -118,7 +120,7 @@ public class Segmented_Least_Squares {
         }
 
         Segmented_Least_Squares test = new Segmented_Least_Squares(n);
-        System.out.println("OPT cost: "+ test.make_SLS(n,points,c));
+        test.result_Print(n,points,c);
     }
 
 
