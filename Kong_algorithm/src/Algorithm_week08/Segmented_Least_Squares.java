@@ -73,6 +73,10 @@ public class Segmented_Least_Squares {
         return OPT[n];
     }
 
+    public void FindSegment(int n) {
+
+    }
+
     public static void main(String[] args) throws IOException {
         //파일입력
         FileInputStream fileInputStream = new FileInputStream("C:\\Users\\ham54\\Desktop\\CSE\\tests\\data08.txt");
