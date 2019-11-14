@@ -6,12 +6,9 @@ import java.util.Scanner;
 
 public class Knapsack {
     private int[][] OPT;
-    private int[][] opt_item;
-    //private int[] opt_item;
 
     public Knapsack(int size, int w) {
         OPT = new int[size][w+1];
-        opt_item = new int[size][w+1];
         for(int i = 0; i < w+1; i++) {
             OPT[0][i] = 0;
         }
@@ -22,17 +19,14 @@ public class Knapsack {
             for(int w = 1; w < weight+1; w++) {
                 if (items.get(i).getWeight() > w) {
                     OPT[i][w] = OPT[i-1][w];
-                    opt_item[i][w] = 0;
                 }
                 else {
                     int temp1 = OPT[i - 1][w];
                     int temp2 = items.get(i).getValue() + OPT[i - 1][w - (items.get(i).getWeight())];
                     if (temp1 > temp2) {
                         OPT[i][w] = temp1;
-                        opt_item[i][w] = 0;
                     } else {
                         OPT[i][w] = temp2;
-                        opt_item[i][w] = 1;
                     }
                 }
             }
