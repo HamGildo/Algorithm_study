@@ -29,7 +29,17 @@ public class Matrix_chain_multiplication {
         return m;
     }
 
+    public void resultPrint(Matrix[] matrices) {
+        int[][] m;
+        m = Matrix_chain_order(matrices);
 
+        for(int i = 1; i < matrices.length; i++) {
+            for(int j = 1; j < matrices.length; j++) {
+                System.out.print(m[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         ArrayList<Matrix> matrices = new ArrayList<>();
