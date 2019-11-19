@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Matrix_chain_multiplication {
+    //201702087_함지희
 
     private int[][] Matrix_chain_order(ArrayList<Matrix> matrices) {
         int n = matrices.size();
@@ -58,8 +59,6 @@ public class Matrix_chain_multiplication {
 
         Matrix_chain_multiplication test = new Matrix_chain_multiplication();
         test.resultPrint(matrices);
-
-
     }
 
 
