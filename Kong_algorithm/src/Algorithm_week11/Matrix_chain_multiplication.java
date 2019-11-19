@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Matrix_chain_multiplication {
-    public int[][] Matrix_chain_order(Matrix[] matrices) {
+
+    private int[][] Matrix_chain_order(Matrix[] matrices) {
         int n = matrices.length;
         int[][] m = new int[n][n];
 
@@ -27,6 +28,8 @@ public class Matrix_chain_multiplication {
 
         return m;
     }
+
+
 
     public static void main(String[] args) throws IOException {
         ArrayList<Matrix> matrices = new ArrayList<>();
