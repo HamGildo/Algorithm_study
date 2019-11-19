@@ -3,18 +3,20 @@ package Algorithm_week10;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Knapsack {
     private int[][] OPT;
+    Stack<Integer> opt_items;
 
-    public Knapsack(int size, int w) {
+    public Knapsack(int size, int w) { //생성자
         OPT = new int[size][w+1];
         for(int i = 0; i < w+1; i++) {
             OPT[0][i] = 0;
         }
     }
 
-    public int[][] optArray(ArrayList<Item> items, int weight){ //OPT값을 채우는 함수
+    private int[][] optArray(ArrayList<Item> items, int weight){ //OPT값을 채우는 함수
         for(int i = 1; i < items.size(); i++) {
             for(int w = 1; w < weight+1; w++) {
                 if (items.get(i).getWeight() > w) {
@@ -31,11 +33,47 @@ public class Knapsack {
                 }
             }
         }
+        findItem(items, weight);
         return OPT;
     }
 
-    private void findItem(){
+    private void findItem(ArrayList<Item> items, int weight){ // 가방에 들어있는 아이템을 추적하는 함수
+        opt_items = new Stack<>();
+        int cmpNum, currentNum;
+        int i = OPT.length-1;
+        int wi = weight;
+        while(true) {
+            cmpNum = OPT[i-1][wi];
+            currentNum = OPT[i][wi];
+            if(cmpNum == 0) break;
+            else if(currentNum == cmpNum) {
+                i--;
+            }
+            else {
+                opt_items.push(i);
+                wi -= items.get(i).getWeight();
+                i--;
+            }
+        }
 
+    }
+
+    public void resultPrint(ArrayList<Item> items, int weight) {
+        int[][] optPrint;
+        optPrint = optArray(items, weight);
+        findItem(items, weight);
+        for(int i = 0; i < items.size(); i++) {
+            for(int j = 0; j < weight+1; j++) {
+                System.out.print(optPrint[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("max : "+ optPrint[items.size()-1][weight]);
+        System.out.print("items : ");
+        while(!opt_items.empty()) {
+            System.out.print(opt_items.pop() + " ");
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) throws IOException {
@@ -58,7 +96,7 @@ public class Knapsack {
         }
 
         Knapsack test = new Knapsack(items.size(), n);
-        test.optArray(items, n);
+        test.resultPrint(items, n);
 
     }
 
