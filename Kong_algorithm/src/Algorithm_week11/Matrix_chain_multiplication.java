@@ -1,5 +1,8 @@
 package Algorithm_week11;
 
+import java.io.*;
+import java.util.ArrayList;
+
 public class Matrix_chain_multiplication {
     public int[][] Matrix_chain_order(Matrix[] matrices) {
         int n = matrices.length;
@@ -24,6 +27,27 @@ public class Matrix_chain_multiplication {
 
         return m;
     }
+
+    public static void main(String[] args) throws IOException {
+        ArrayList<Matrix> matrices = new ArrayList<>();
+
+        //파일입력
+        File file = new File("C:\\Users\\ham54\\Desktop\\CSE\\tests\\data11_matrix_chain.txt");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String read; // 버퍼에서 읽어들인 한 줄을 저장할 장소
+        while((read = bufferedReader.readLine()) != null) {
+            String[] arr_d = read.split(",");
+            Matrix I = new Matrix(Integer.parseInt(arr_d[0]), Integer.parseInt(arr_d[1]));
+            matrices.add(I);
+        }
+
+
+
+
+    }
+
+
 
 
 }
